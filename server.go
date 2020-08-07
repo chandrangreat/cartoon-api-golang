@@ -14,6 +14,8 @@ func generalHandler(w http.ResponseWriter, r *http.Request) {
 		api.Handler(w, r)
 	case "":
 		w.Write([]byte(`{"message": "Invalid Resource"}`))
+	default:
+		w.Write([]byte(`{"message": "Invalid Resource"}`))
 	}
 }
 
