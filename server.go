@@ -2,25 +2,25 @@ package main
 
 import (
 	"fmt"
-	"gitlab.com/ravi.chandran/cartoon/api"
+	"github.com/gorilla/mux"
+	"gitlab.com/ravi.chandran/cartoon/handler"
 	"log"
 	"net/http"
 )
 
-func generalHandler(w http.ResponseWriter, r *http.Request) {
-	// fmt.Fprintf(w, "Hi there, I love %s!", r.URL.Path[8:])
-	switch r.URL.Path[8:] {
-	case "cartoons":
-		api.Handler(w, r)
-	case "":
-		w.Write([]byte(`{"message": "Invalid Resource"}`))
-	default:
-		w.Write([]byte(`{"message": "Invalid Resource"}`))
-	}
-}
-
 func main() {
-	http.HandleFunc("/api/v1/", generalHandler)
+	var router = mux.NewRouter()
+	var api = router.PathPrefix("/api").Subrouter()
+	api.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotFound)
+	})
+	var api1 = api.PathPrefix("/v1").Subrouter()
+	api1.HandleFunc("/cartoons", handler.Handler)
+	api1.HandleFunc("/cartoons/{id}", handler.Handler)
+	api1.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusForbidden)
+	})
+
 	fmt.Println("Serving from http://localhost:8080/api/v1")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
