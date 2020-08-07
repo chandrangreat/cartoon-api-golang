@@ -1,10 +1,10 @@
-# Goal
+# Goals
 
-- Simple Web server cartoons API CRUD, without DB using In-Memory
-- no external libraries
+- Create a Simple Web server:- Cartoons API
+- Do all CRUD operations, without DB only using In-Memory storage
 - Dockerrize to run anywhere
 
-## Using Docker
+## How to run the Cartoons API server Using Docker
 
 - Build the image
 
