@@ -2,7 +2,7 @@
 
 - Create a Simple Web server:- Cartoons API
 - Do all CRUD operations, without DB only using In-Memory storage
-- Dockerrize to run anywhere
+- Dockerize to run anywhere
 
 ## How to run the Cartoons API server Using Docker
 
@@ -20,11 +20,7 @@ docker run -p 8080:8080 cartoon-api:latest
 
 - The api endpoint is `http://localhost:8080/api/v1/cartoons`
 
-## Note
-
-Currently only GET and POST calls will work as we couldn't find a way to have query params using the net/http package. Hence we will try using gorilla tools in another branch.
-
-### Please check `"using-gorilla-library" branch` for more a complete REST API.
+### Please check `"using-gorilla-library" branch` which uses a better routing package.
 
 ## API Docs
 
@@ -47,3 +43,21 @@ Body
     "ratings": 8
 }
 ```
+
+### PUT request
+
+`http://localhost:8080/api/v1/cartoons/${id}`
+
+Body
+
+```
+{
+		"id": 5,
+    "title": "Tintin",
+    "ratings": 8
+}
+```
+
+### Delete request
+
+`http://localhost:8080/api/v1/cartoons/${id}`
